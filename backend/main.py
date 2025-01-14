@@ -6,7 +6,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.util import await_fallback
 
-from models import init_db
+from .schemas import TaskAdd, TaskComplete
+from .models import init_db
 import requests as rq
 
 
@@ -41,6 +42,19 @@ async def profile(tg_id :int):
     user = await rq.get_or_create_user(tg_id=tg_id)
     completed_tasks_count = await rq.get_completed_tasks_count(user.id)
     return {"completedTasks": completed_tasks_count}
+
+
+@app.post("/api/add")
+async def add_task(task: TaskAdd):
+    user = await rq.get_or_create_user(task.tg_id)
+    await rq.add_task(user.id, task.title)
+    return {"status": "ok"}
+
+
+@app.patch("/api/complete")
+async def complete_task(task: TaskComplete):
+    await rq.complete_task(task.id)
+    return {"status": "ok"}
 
 
 
