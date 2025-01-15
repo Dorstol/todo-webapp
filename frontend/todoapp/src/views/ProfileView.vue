@@ -1,43 +1,43 @@
 <template>
-  <div class="profile-container">
-    <h2>Profile</h2>
-    <div class="profile-info">
-      <p><strong>ID:</strong>{{ user.id }}</p>
-      <p><strong>Name:</strong>{{ user.name }}</p>
-      <p><strong>Completed tasks:</strong>{{ user.completedTasks }}</p>
+    <div class="profile-container">
+        <h2>Профиль</h2>
+        <div class="profile-info">
+            <p><strong>ID:</strong> {{ user.id }}</p>
+            <p><strong>Имя:</strong> {{ user.name }}</p>
+            <p><strong>Выполнено задач:</strong> {{ user.completedTasks }}</p>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
-  name: "ProfileView",
-  data() {
-    return {
-      user: {
-        id: '',
-        name: '',
-        completedTasks: 0,
-      }
+    name: 'ProfileView',
+    data() {
+        return {
+            user: {
+                id: '',
+                name: '',
+                completedTasks: 0
+            }
+        }
+    },
+    async mounted() {
+        await this.fetchProfile()
+    },
+    methods: {
+        async fetchProfile() {
+            try {
+                const tg_user = window.Telegram.WebApp.initDataUnsafe?.user
+                const response = await fetch(`https://reimagined-orbit-rxvj59pwv6p3p597-8000.app.github.dev/api/main/${tg_user.id}`)
+                const data = await response.json()
+                this.user.id = tg_user.id
+                this.user.name = tg_user.first_name
+                this.user.completedTasks = data.completedTasks
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
-  },
-  async mounted() {
-    await this.fetchProfile()
-  },
-  methods: {
-    async fetchProfile() {
-      try {
-        const tg_user = window.Telegram.Webapp.initDataUnsafe?.user
-        const response = await fetch(`https://cautious-space-fortnight-p6qx5vp96w5h6q79-8000.app.github.dev/api/tasks/${tg_user.id}`)
-        const data = await response.json()
-        this.user.id = tg_user.id
-        this.user.name = tg_user.name
-        this.user.completedTasks = data.completedTasks
-      } catch(error) {
-        console.log("error", error);
-      }
-    } 
-  },
 }
 </script>
 

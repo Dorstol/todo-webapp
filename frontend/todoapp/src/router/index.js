@@ -1,4 +1,3 @@
-// src/router.js
 import { createRouter, createWebHistory } from 'vue-router'
 import TasksView from '../views/TaskView.vue'
 import ProfileView from '../views/ProfileView.vue'

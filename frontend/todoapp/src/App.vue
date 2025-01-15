@@ -1,8 +1,11 @@
 <template>
-	<div class="app_container">
-		<router-view></router-view>
-    <Nav />
-	</div>
+  <div class="app_container">
+
+    <router-view />
+
+    <Navbar />
+
+  </div>
 </template>
 
 <script>
@@ -17,11 +20,13 @@ export default {
 </script>
 
 <style scoped>
-.app_container {
+.app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont,"Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  height: 98vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  /* Общий стилизованный фон в стиле iOS (можно доработать) */
   background: linear-gradient(to bottom right, #f0f0f0, #ffffff);
 }
 </style>
